@@ -82,8 +82,14 @@ steps:
       zipAfterPublish: false
     displayName: DotNet publish
 
+  # - powershell: |
+  #     Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\$(Build.BuildId)-dotnet -Recurse -Include $(DotNetProjects) |
+  #     Compress-Archive -DestinationPath "$(Build.ArtifactStagingDirectory)\$(Build.BuildId)-dotnet-compressed.zip"
+  #   displayName: Zip DotNet files
+
   - powershell: |
-      Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\$(Build.BuildId)-dotnet -Recurse -Include $(DotNetProjects) |
+      $projects = "$(DotNetProjects)".Split(",")
+      Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)\$(Build.BuildId)-dotnet" -Recurse -Include $projects |
       Compress-Archive -DestinationPath "$(Build.ArtifactStagingDirectory)\$(Build.BuildId)-dotnet-compressed.zip"
     displayName: Zip DotNet files
 
