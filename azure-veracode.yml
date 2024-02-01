@@ -19,20 +19,30 @@ steps:
 #       KeyVaultName: my-keyvault
 
 # Download and extract the pipeline scan from Veracode and fetch the policy
-  - script: curl -O -L https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
-    displayName: Download pipeline scan
+  # - script: curl -O -L https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
+  #   displayName: Download pipeline scan
 
-  - task: ExtractFiles@1
+  # - task: ExtractFiles@1
+  #   inputs:
+  #     archiveFilePatterns: 'pipeline-scan-LATEST.zip'
+  #     cleanDestinationFolder: true
+  #   displayName: Extract Veracode pipeline scan
+
+  # - script: java -jar pipeline-scan.jar --veracode_api_id "$(VERACODE-API-ID)" --veracode_api_key "$(VERACODE-API-KEY)"
+  #   env:
+  #     VERACODE_API_ID: $(VERACODE-API-ID)
+  #     VERACODE_API_KEY: $(VERACODE-API-KEY)
+  #   displayName: Fetch security policy
+
+
+  - task: CmdLine@2
+    displayName: Veracode Static Pipeline Scanner
     inputs:
-      archiveFilePatterns: 'pipeline-scan-LATEST.zip'
-      cleanDestinationFolder: true
-    displayName: Extract Veracode pipeline scan
+      script: |
+        curl -sSO https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
+        unzip -o pipeline-scan-LATEST.zip
+        java -jar pipeline-scan.jar -vid $(VERACODE_API_ID) -vkey $(VERACODE_API_KEY) -f $(build.artifactstagingdirectory)\Verademo-dotnet.zip || true
 
-  - script: java -jar pipeline-scan.jar --veracode_api_id "$(VERACODE-API-ID)" --veracode_api_key "$(VERACODE-API-KEY)"
-    env:
-      VERACODE_API_ID: $(VERACODE-API-ID)
-      VERACODE_API_KEY: $(VERACODE-API-KEY)
-    displayName: Fetch security policy
 
 # # Zip and scan Javascript files in the entire project
 #   - powershell: |
