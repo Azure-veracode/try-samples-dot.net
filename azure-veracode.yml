@@ -25,7 +25,7 @@ steps:
   - task: ExtractFiles@1
     inputs:
       archiveFilePatterns: 'pipeline-scan-LATEST.zip'
-      cleanDestinationFolder: false
+      cleanDestinationFolder: true
     displayName: Extract Veracode pipeline scan
 
   - script: java -jar pipeline-scan.jar --veracode_api_id "$(VERACODE-API-ID)" --veracode_api_key "$(VERACODE-API-KEY)" --request_policy "Name Of Policy"
