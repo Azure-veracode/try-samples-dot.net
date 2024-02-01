@@ -8,8 +8,8 @@ pool:
   vmImage: windows-latest
 
 # # If you created a DotNet project, make sure that the .dll, .exe and .pdb are included here
-# variables:
-#   - name: DotNetProjects
+variables:
+  - name: DotNetProjects
 #     value: MyProject.*.dll, MyProject.*.exe, MyProject.*.pdb
 
 steps:
