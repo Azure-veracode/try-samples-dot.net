@@ -12,7 +12,7 @@ pool:
 #   - name: DotNetProjects
 #     value: MyProject.*.dll, MyProject.*.exe, MyProject.*.pdb
 
-# steps:
+steps:
 #   - template: /templates/azure-key-vault-secrets.yml
 #     parameters:
 #       AzureSubscription: $(azure_connection_name)
