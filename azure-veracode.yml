@@ -18,21 +18,21 @@ steps:
 #       AzureSubscription: $(azure_connection_name)
 #       KeyVaultName: my-keyvault
 
-# # Download and extract the pipeline scan from Veracode and fetch the policy
-#   - script: curl -O -L https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
-#     displayName: Download pipeline scan
+# Download and extract the pipeline scan from Veracode and fetch the policy
+  - script: curl -O -L https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
+    displayName: Download pipeline scan
 
-#   - task: ExtractFiles@1
-#     inputs:
-#       archiveFilePatterns: 'pipeline-scan-LATEST.zip'
-#       cleanDestinationFolder: false
-#     displayName: Extract Veracode pipeline scan
+  - task: ExtractFiles@1
+    inputs:
+      archiveFilePatterns: 'pipeline-scan-LATEST.zip'
+      cleanDestinationFolder: false
+    displayName: Extract Veracode pipeline scan
 
-#   - script: java -jar pipeline-scan.jar --veracode_api_id "$(VERACODE-API-ID)" --veracode_api_key "$(VERACODE-API-KEY)" --request_policy "Name Of Policy"
-#     env:
-#       VERACODE_API_ID: $(VERACODE-API-ID)
-#       VERACODE_API_KEY: $(VERACODE-API-KEY)
-#     displayName: Fetch security policy
+  - script: java -jar pipeline-scan.jar --veracode_api_id "$(VERACODE-API-ID)" --veracode_api_key "$(VERACODE-API-KEY)" --request_policy "Name Of Policy"
+    env:
+      VERACODE_API_ID: $(VERACODE-API-ID)
+      VERACODE_API_KEY: $(VERACODE-API-KEY)
+    displayName: Fetch security policy
 
 # # Zip and scan Javascript files in the entire project
 #   - powershell: |
